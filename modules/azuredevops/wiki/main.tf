@@ -63,6 +63,6 @@ EOF
   }
   skip_tls_verify = true
   response_codes  = [200, 201, 409] //we treat 409 as "wiki already exists", so module will not report error
-  retry_interval  = 20              //default interval is to low
+  retry_interval  = 20              //default interval is too low
 }
 
