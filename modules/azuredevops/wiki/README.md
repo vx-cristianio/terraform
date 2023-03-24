@@ -1,5 +1,5 @@
 - This module creates Azure Devops Project Wiki of type **projectWiki**
-- Wikis are not implemented in Terraform Azure Devops Provider hence I used [terracurl](https://registry.terraform.io/providers/devops-rob/terracurl/latest/docs/resources/request) provider to call AzDO API endpoint.
+- Wikis are not implemented in Terraform Azure Devops Provider hence I used [terracurl](https://registry.terraform.io/providers/devops-rob/terracurl/latest/docs/resources/request) provider to call AzDO API endpoint. More info on [Terraform Blog](https://www.hashicorp.com/blog/writing-terraform-for-unsupported-resources)
 - [API documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/wiki/wikis/create?view=azure-devops-rest-7.0)
 - This API does not support CRUD operations for **projectWiki** type. Because of this destroy operation is "fake", so in order for this module to be indempotent we need to read existing Wiki ID in case they are already created.
 - Probably this is why Microsoft has not implemented a "wiki" resource in azuredevops Terraform provider.

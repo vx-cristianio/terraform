@@ -5,15 +5,24 @@ provider "azuredevops" {
 provider "terracurl" {
 }
 
-locals {
-  authorization_token = base64encode("terraform:${var.AZDO_PAT}")
-}
 
 data "azuredevops_project" "project" {
   name = var.project_name
 }
 
-//Check if wiki already exists
+# Get the ADO PAT environment variable to avoid setting the token twice (ENV variable and TF variable). Using Powershell core will make script platform independent.
+data "external" "env" {
+  program = [
+    "pwsh",
+    "${path.module}/get_env.ps1"
+  ]
+}
+
+locals {
+  authorization_token = base64encode("terraform:${data.external.env.result["AZDO_PAT"]}")
+}
+
+#Check if wiki already exists
 data "terracurl_request" "wiki" {
   name = "wiki"
 
@@ -31,6 +40,7 @@ data "terracurl_request" "wiki" {
 }
 
 
+#Create wiki
 resource "terracurl_request" "wiki" {
   name = "wiki"
 
